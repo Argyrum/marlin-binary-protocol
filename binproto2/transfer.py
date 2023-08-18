@@ -20,7 +20,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Send files over a serial port to Marlin')
     parser.add_argument('source', help='source path')
     parser.add_argument('destination', nargs='?', help='destination path')
-    parser.add_argument("-p", "--port", default="/dev/ttyACM0", help="serial port to use")
+    parser.add_argument("-p", "--port", default="COM3", help="serial port to use")
     parser.add_argument("-b", "--baud", default="115200", help="baud rate of serial connection")
     parser.add_argument("-d", "--blocksize", default="512", help="defaults to autodetect")
     parser.add_argument("-r", "--reset", action='store_true', help="Reset after transfer (firmware flash)")
@@ -43,6 +43,8 @@ if __name__ == "__main__":
 
         if args.reset:
             protocol.send_ascii("M997")
+        else:
+            protocol.send_ascii("M21")
     except KeyboardInterrupt:
         filetransfer.abort()
 
