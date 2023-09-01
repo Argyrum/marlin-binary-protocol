@@ -1,0 +1,2 @@
+python -m binproto2.transfer [-h] [-p PORT] [-b BAUD] [-d BLOCKSIZE] [-r] [-t] [-c] [-x TIMEOUT] source [destination]
+python -m binproto2.transfer -c source
