@@ -16,22 +16,10 @@ class ConsoleLogger(object):
     def exception(self, msg, *args, **kwargs):
         print("EXCEPTION: {0}".format(msg))
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Send files over a serial port to Marlin')
-    parser.add_argument('source',                                       help='Source path')
-    parser.add_argument('destination',          nargs='?',              help='Destination path (default SD root folder)')
-    parser.add_argument("-p", "--port",         default="COM3",         help="Serial port to use (default COM3)")
-    parser.add_argument("-b", "--baud",         default="115200",       help="Baud rate of serial connection (default 115200)")
-    parser.add_argument("-d", "--blocksize",    default="512",          help="Defaults to autodetect (Default 512)")
-    parser.add_argument("-r", "--reset",        action='store_true',    help="Reset after transfer (For firmware flash, needed for E3V2s)")
-    parser.add_argument("-t", "--test",         action='store_true',    help="Benchmark the serial link without storing the file")
-    parser.add_argument("-c", "--compression",  action='store_true',    help="Enable compression (Recommended for files above 500kB)")
-    parser.add_argument("-x", "--timeout",      default="1000",         help="Communication timout, lossy/slow connections need higher values")
 
-    args = parser.parse_args()
-
+def main(port, baud, blocksize, timeout, source, destination, compression, test):
     try:
-        protocol = mbp.Protocol(args.port, args.baud, args.blocksize, int(args.timeout), ConsoleLogger())
+        protocol = mbp.Protocol(port, baud, blocksize, timeout, ConsoleLogger())
         echologger = mbp.EchoProtocol(protocol, ConsoleLogger())
 
         protocol.connect()
@@ -57,3 +45,20 @@ if __name__ == "__main__":
 
     finally:
         protocol.shutdown()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Send files over a serial port to Marlin')
+    parser.add_argument('source',                                       help='Source path')
+    parser.add_argument('destination',          nargs='?',              help='Destination path (default SD root folder)')
+    parser.add_argument("-p", "--port",         default="COM3",         help="Serial port to use (default COM3)")
+    parser.add_argument("-b", "--baud",         default="115200",       help="Baud rate of serial connection (default 115200)")
+    parser.add_argument("-d", "--blocksize",    default="512",          help="Defaults to autodetect (Default 512)")
+    parser.add_argument("-r", "--reset",        action='store_true',    help="Reset after transfer (For firmware flash, needed for E3V2s)")
+    parser.add_argument("-t", "--test",         action='store_true',    help="Benchmark the serial link without storing the file")
+    parser.add_argument("-c", "--compression",  action='store_true',    help="Enable compression (Recommended for files above 500kB)")
+    parser.add_argument("-x", "--timeout",      default="1000",         help="Communication timout, lossy/slow connections need higher values")
+
+    args = parser.parse_args()
+
+    main(port = args.port, baud = args.baud, blocksize = args.blocksize, timeout = int(args.timeout), source = args.source, destination = args.destination, compression = args.compression, test = args.test)
