@@ -1,2 +1,7 @@
 python -m binproto2.transfer [-h] [-p PORT] [-b BAUD] [-d BLOCKSIZE] [-r] [-t] [-c] [-x TIMEOUT] source [destination]
 python -m binproto2.transfer -c source
+
+Shortcut version: (Only for windows)
+	After installing the python module copy the Transfer.lnk shortcut to your computer.
+	Verify the parameters called inside the shourtcut are correct (check the python installation path and printer COM port are correct).
+	To use, drag and drop a .gcode file on top of the shortcut, a console should pop up starting the transfer process (check that your printer is powered up and has reached the main menu).

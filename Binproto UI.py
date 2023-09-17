@@ -2,7 +2,7 @@
 
 """
 
-Curse-based helper script to manage files and updates on a 3d printer running under marlin with support for binary transfer
+Curse-based helper script to manage files and updates on a 3d printer running under marlin with support for binary transfer.
 
 Features:
     L)oad list      WIP
